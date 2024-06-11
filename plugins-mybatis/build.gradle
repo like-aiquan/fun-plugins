@@ -1,0 +1,16 @@
+dependencies {
+    compileOnly 'org.mybatis:mybatis:3.5.10'
+    compileOnly 'org.slf4j:slf4j-api:1.7.32'
+
+    testImplementation(platform("org.junit:junit-bom:5.9.2"))
+    testImplementation('org.junit.jupiter:junit-jupiter:5.9.2')
+    testImplementation 'org.slf4j:slf4j-api:1.7.32'
+    testImplementation 'ch.qos.logback:logback-classic:1.4.12'
+    testImplementation 'org.mybatis:mybatis:3.5.10'
+    testImplementation 'com.zaxxer:HikariCP:5.0.1'
+    testImplementation 'com.mysql:mysql-connector-j:8.2.0'
+}
+
+tasks.test {
+    useJUnitPlatform()
+}

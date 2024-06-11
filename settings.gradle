@@ -1,0 +1,6 @@
+rootProject.name = "fun-plugins"
+include 'distributed-lock'
+include 'plugins-mybatis'
+include 'rocketmq'
+include 'common'
+

@@ -1,0 +1,50 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.0' apply false
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+    id 'java'
+    id 'maven-publish'
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+
+    group = 'like.ai'
+    version = '0.0.1-SNAPSHOT'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    tasks.register('sourceJar', Jar) {
+        // 配置源代码目录
+        from sourceSets.main.allJava
+        // 设置Jar文件分类器为 'sources'
+        archiveClassifier.set('sources')
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+
+        //定义目标仓库 (包所存放的地方)
+        repositories {
+            // 本地仓库
+            mavenLocal()
+
+            //maven {
+            //    credentials {
+            //        username project.findProperty("mavenUser") ?: ''
+            //        password project.findProperty("mavenPass") ?: ''
+            //    }
+            //    def releasesRepoUrl = ""
+            //    def snapshotsRepoUrl = ""
+            //    url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            //}
+        }
+    }
+}
