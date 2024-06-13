@@ -1,6 +1,6 @@
 dependencies {
+    compileOnly 'com.google.guava:guava:33.2.1-jre'
     compileOnly 'com.fasterxml.jackson.core:jackson-databind:2.14.0-rc1'
-    compileOnly 'com.google.guava:guava:32.0.0-android'
     compileOnly 'org.slf4j:slf4j-api:1.7.32'
 }
 

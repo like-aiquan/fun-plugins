@@ -9,7 +9,7 @@ dependencies {
     compileOnly 'org.redisson:redisson:3.24.3'
     compileOnly 'org.springframework.boot:spring-boot-starter-jdbc'
     compileOnly 'com.mysql:mysql-connector-j:8.2.0'
-    implementation 'com.google.guava:guava:32.0.0-android'
+    compileOnly 'com.google.guava:guava:33.2.1-jre'
 
     testImplementation(platform("org.junit:junit-bom:5.9.2"))
     testImplementation('org.junit.jupiter:junit-jupiter:5.9.2')
@@ -19,7 +19,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-jdbc'
     testImplementation 'org.springframework.boot:spring-boot-starter-data-redis'
     testImplementation 'com.mysql:mysql-connector-j:8.2.0'
-    testImplementation 'com.google.guava:guava:32.0.0-android'
+    testImplementation 'com.google.guava:guava:33.2.1-jre'
 }
 
 tasks.test {
