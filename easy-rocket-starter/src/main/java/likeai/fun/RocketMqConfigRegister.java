@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration(proxyBeanMethods = false)
 public class RocketMqConfigRegister {
     @Bean
-    @ConfigurationProperties(prefix = "likeai.rocketmq")
+    @ConfigurationProperties(prefix = "easy.rocketmq")
     public RocketMqProperties rocketMqProperties() {
         return new RocketMqProperties();
     }

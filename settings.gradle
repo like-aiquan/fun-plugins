@@ -4,3 +4,5 @@ include 'plugins-mybatis'
 include 'rocketmq'
 include 'common'
 include 'easy-rocket-starter'
+include 'easy-rocket-starter-example'
+
