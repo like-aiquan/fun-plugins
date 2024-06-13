@@ -3,8 +3,8 @@ package likeai.fun.locker.renewal;
 import io.lettuce.core.ScriptOutputType;
 import java.util.concurrent.TimeUnit;
 import likeai.fun.locker.redis.RedisDistributedLocker;
-import likeai.fun.task.DaleyTaskHolder;
-import likeai.fun.task.DaleyTask;
+import likeai.fun.DaleyTaskHolder;
+import likeai.fun.DelayTask;
 import likeai.fun.redis.RedisLinkTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class RedisDistributedLockerRenewal implements RenewalLockerTask {
         this.connect = locker.getConnect();
 
         // 当过期时间已经过了2/3时触发自动续期
-        DaleyTaskHolder.submit(new DaleyTask((this.expire * 2) / 3, TimeUnit.MILLISECONDS, this::renewal));
+        DaleyTaskHolder.submit(new DelayTask((this.expire * 2) / 3, TimeUnit.MILLISECONDS, this::renewal));
     }
 
     private RedisDistributedLockerRenewal(RedisDistributedLockerRenewal renewal) {
@@ -43,7 +43,7 @@ public class RedisDistributedLockerRenewal implements RenewalLockerTask {
         this.expire = renewal.getExpire();
         this.connect = renewal.getConnect();
 
-        DaleyTaskHolder.submit(new DaleyTask((this.expire * 2) / 3, TimeUnit.MILLISECONDS, this::renewal));
+        DaleyTaskHolder.submit(new DelayTask((this.expire * 2) / 3, TimeUnit.MILLISECONDS, this::renewal));
     }
 
     @Override

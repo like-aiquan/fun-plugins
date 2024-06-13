@@ -3,6 +3,8 @@ apply plugin: 'io.spring.dependency-management'
 
 dependencies {
     implementation project(":common")
+    implementation project(":delay-task")
+
     compileOnly 'io.lettuce:lettuce-core:6.3.0.RELEASE'
     compileOnly 'org.redisson:redisson:3.24.3'
     compileOnly 'org.springframework.boot:spring-boot-starter-jdbc'

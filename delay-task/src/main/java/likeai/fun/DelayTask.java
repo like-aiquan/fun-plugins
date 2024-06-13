@@ -1,4 +1,4 @@
-package likeai.fun.task;
+package likeai.fun;
 
 import static java.util.Objects.requireNonNull;
 
@@ -7,8 +7,8 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DaleyTask implements Delayed {
-    private static final Logger log = LoggerFactory.getLogger(DaleyTask.class);
+public class DelayTask implements Delayed {
+    private static final Logger log = LoggerFactory.getLogger(DelayTask.class);
     /**
      * 时间
      */
@@ -18,7 +18,7 @@ public class DaleyTask implements Delayed {
      */
     private final Runnable runnable;
 
-    public DaleyTask(long delay, TimeUnit unit, Runnable runnable) {
+    public DelayTask(long delay, TimeUnit unit, Runnable runnable) {
         requireNonNull(runnable);
         log.info("delay [{}, {}]", delay, unit);
         // 任务投递时间
@@ -33,7 +33,7 @@ public class DaleyTask implements Delayed {
 
     @Override
     public int compareTo(Delayed other) {
-        return Long.compare(this.expire, ((DaleyTask) other).expire);
+        return Long.compare(this.expire, ((DelayTask) other).expire);
     }
 
     public Runnable runnable() {

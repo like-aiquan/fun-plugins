@@ -1,4 +1,4 @@
-package likeai.fun.task;
+package likeai.fun;
 
 import java.util.Objects;
 import java.util.concurrent.DelayQueue;
@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DaleyTaskHolder {
     private static final Logger log = LoggerFactory.getLogger(DaleyTaskHolder.class);
-    protected static final DelayQueue<DaleyTask> tasks = new DelayQueue<>();
+    protected static final DelayQueue<DelayTask> tasks = new DelayQueue<>();
     protected static final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
     static {
@@ -26,7 +26,7 @@ public class DaleyTaskHolder {
             if (log.isDebugEnabled()) {
                 log.debug("run executor task");
             }
-            DaleyTask task = tasks.poll();
+            DelayTask task = tasks.poll();
             if (Objects.isNull(task)) {
                 return;
             }
@@ -44,7 +44,7 @@ public class DaleyTaskHolder {
         };
     }
 
-    public static void submit(DaleyTask task) {
+    public static void submit(DelayTask task) {
         tasks.add(task);
         if (log.isDebugEnabled()) {
             log.debug("add task success daley {}", task.getDelay(TimeUnit.SECONDS));

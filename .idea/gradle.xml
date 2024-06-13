@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/delay-task" />
             <option value="$PROJECT_DIR$/distributed-lock" />
             <option value="$PROJECT_DIR$/easy-rocket-starter" />
             <option value="$PROJECT_DIR$/easy-rocket-starter-example" />
