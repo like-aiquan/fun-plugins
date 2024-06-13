@@ -3,8 +3,8 @@ package likeai.fun.consumer;
 
 import java.util.Properties;
 import java.util.function.Supplier;
-import likeai.fun.mq.RocketMqConfig;
 import likeai.fun.mq.Message;
+import likeai.fun.mq.RocketMqConfig;
 import likeai.fun.topic.RocketTopic;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.slf4j.Logger;
@@ -18,6 +18,7 @@ import org.slf4j.MDC;
 public abstract class AbstractRocketConsumer<T extends RocketTopic> implements RocketConsumer<T> {
     protected static final Logger logger = LoggerFactory.getLogger(RocketConsumer.class);
 
+    private final static String MID = "MID";
     protected final RocketMqConfig rocketMqConfig;
 
     public AbstractRocketConsumer(RocketMqConfig rocketMqConfig) {
@@ -36,12 +37,16 @@ public abstract class AbstractRocketConsumer<T extends RocketTopic> implements R
         return message;
     }
 
-    protected <R> R trance(Supplier<R> call, String tranceId) {
-        MDC.put("msgId", tranceId);
+    protected <R> R trance(Supplier<R> call, String tid) {
+        return this.trance(call, MID, tid);
+    }
+
+    protected <R> R trance(Supplier<R> call, String mdc, String tid) {
+        MDC.put(mdc, tid);
         try {
             return call.get();
         } finally {
-            MDC.remove("msgId");
+            MDC.remove(mdc);
         }
     }
 

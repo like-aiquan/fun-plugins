@@ -1,15 +1,18 @@
-plugins {
-    id 'java'
-}
-
-group = 'likeai.rocketmq'
-version = 'unspecified'
-
-repositories {
-    mavenCentral()
-}
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 dependencies {
+    // To demonstrate
+    // it is essential to choose the required module and then publish it to your Maven repository.
+    implementation project(':common')
+    implementation project(':rocketmq')
+    implementation project(':easy-rocket-starter')
+
+    implementation 'com.google.guava:guava:33.2.1-jre'
+    implementation 'org.apache.rocketmq:rocketmq-client:5.1.3'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework:spring-tx'
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }

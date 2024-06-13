@@ -34,7 +34,7 @@ public abstract class AbstractNormalRocketConsumer<T extends NormalRocketTopic> 
     }
 
     public AbstractNormalRocketConsumer(RocketMqConfig rocketMqConfig, SubscribeRelation subscribeRelation,
-                                        Class<T> bindClazz, DefaultMQPushConsumer consumer) {
+            Class<T> bindClazz, DefaultMQPushConsumer consumer) {
         super(rocketMqConfig);
         this.bindClazz = bindClazz;
         this.subscribeRelation = subscribeRelation;
