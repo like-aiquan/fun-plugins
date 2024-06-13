@@ -26,12 +26,11 @@ subprojects {
         publications {
             mavenJava(MavenPublication) {
                 from components.java
+                artifact sourcesJar
             }
         }
 
-        //定义目标仓库 (包所存放的地方)
         repositories {
-            // 本地仓库
             mavenLocal()
 
             //maven {
