@@ -6,7 +6,7 @@ import static likeai.fun.StringUtils.requireHasText;
  * @author likeai
  */
 @FunctionalInterface
-public interface Locked {
+public interface KeyBuilder {
     String name();
 
     default String concat(String key) {
