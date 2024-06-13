@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import javax.annotation.PreDestroy;
 import likeai.fun.ContinuousStopwatch;
-import likeai.fun.mq.RocketMqProperties;
+import likeai.fun.mq.RocketMqConfig;
 import likeai.fun.json.JsonUtil;
 import likeai.fun.mq.Action;
 import likeai.fun.mq.Message;
@@ -29,28 +29,21 @@ public abstract class AbstractNormalRocketConsumer<T extends NormalRocketTopic> 
     private final SubscribeRelation subscribeRelation;
     private final Class<T> bindClazz;
 
-    public AbstractNormalRocketConsumer(RocketMqProperties rocketMqProperties, SubscribeRelation subscribeRelation, Class<T> bindClazz) {
-        this(rocketMqProperties, subscribeRelation, bindClazz, new DefaultMQPushConsumer());
+    public AbstractNormalRocketConsumer(RocketMqConfig rocketMqConfig, SubscribeRelation subscribeRelation, Class<T> bindClazz) {
+        this(rocketMqConfig, subscribeRelation, bindClazz, new DefaultMQPushConsumer());
     }
 
-    public AbstractNormalRocketConsumer(RocketMqProperties rocketMqProperties, SubscribeRelation subscribeRelation,
+    public AbstractNormalRocketConsumer(RocketMqConfig rocketMqConfig, SubscribeRelation subscribeRelation,
                                         Class<T> bindClazz, DefaultMQPushConsumer consumer) {
-        super(rocketMqProperties);
+        super(rocketMqConfig);
         this.bindClazz = bindClazz;
         this.subscribeRelation = subscribeRelation;
         this.consumer = consumer;
-
-        try {
-            this.start();
-            logger.info("start consumer success! {}, {}", this.getClass().getSimpleName(), consumer.getConsumerGroup());
-        } catch (MQClientException e) {
-            logger.error("start consumer error! {} {}", this.getClass().getSimpleName(), e.getErrorMessage(), e);
-        }
     }
 
     public void start() throws MQClientException {
-        this.consumer.setNamespace(this.rocketMqProperties.getNameSpace());
-        String nameSrvAddr = this.rocketMqProperties.getNameSrvAddr();
+        this.consumer.setNamespace(this.rocketMqConfig.getNameSpace());
+        String nameSrvAddr = this.rocketMqConfig.getNameSrvAddr();
         if (nameSrvAddr != null && !nameSrvAddr.isEmpty()) {
             this.consumer.setNamesrvAddr(nameSrvAddr);
         }

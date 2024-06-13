@@ -3,7 +3,7 @@ package likeai.fun.producer;
 
 import java.util.Objects;
 import likeai.fun.fallback.FallBackService;
-import likeai.fun.mq.RocketMqProperties;
+import likeai.fun.mq.RocketMqConfig;
 import likeai.fun.topic.RocketTopic;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
@@ -19,11 +19,11 @@ import org.apache.rocketmq.remoting.exception.RemotingException;
 public class OrderRocketProducer extends AbstractRocketProducer {
     private final DefaultMQProducer producer;
 
-    public OrderRocketProducer(RocketMqProperties producerProperties, FallBackService fallBackService) {
+    public OrderRocketProducer(RocketMqConfig producerProperties, FallBackService fallBackService) {
         this(producerProperties, fallBackService, new DefaultMQProducer());
     }
 
-    public OrderRocketProducer(RocketMqProperties producerProperties, FallBackService fallBackService, DefaultMQProducer producer) {
+    public OrderRocketProducer(RocketMqConfig producerProperties, FallBackService fallBackService, DefaultMQProducer producer) {
         super(producerProperties, fallBackService);
 
         this.producer = producer;
@@ -32,9 +32,9 @@ public class OrderRocketProducer extends AbstractRocketProducer {
 
     private void start() {
         try {
-            this.producer.setProducerGroup(this.producerProperties.getProducerGroup());
-            this.producer.setNamespace(this.producerProperties.getNameSpace());
-            String nameSrvAddr = this.producerProperties.getNameSrvAddr();
+            this.producer.setProducerGroup(this.config.getProducerGroup());
+            this.producer.setNamespace(this.config.getNameSpace());
+            String nameSrvAddr = this.config.getNameSrvAddr();
             this.producer.setNamesrvAddr(nameSrvAddr);
             this.producer.start();
             logger.info("start producer success {}", this.getClass().getSimpleName());

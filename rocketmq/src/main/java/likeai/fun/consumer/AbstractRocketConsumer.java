@@ -3,7 +3,7 @@ package likeai.fun.consumer;
 
 import java.util.Properties;
 import java.util.function.Supplier;
-import likeai.fun.mq.RocketMqProperties;
+import likeai.fun.mq.RocketMqConfig;
 import likeai.fun.mq.Message;
 import likeai.fun.topic.RocketTopic;
 import org.apache.rocketmq.common.message.MessageExt;
@@ -18,10 +18,10 @@ import org.slf4j.MDC;
 public abstract class AbstractRocketConsumer<T extends RocketTopic> implements RocketConsumer<T> {
     protected static final Logger logger = LoggerFactory.getLogger(RocketConsumer.class);
 
-    protected final RocketMqProperties rocketMqProperties;
+    protected final RocketMqConfig rocketMqConfig;
 
-    public AbstractRocketConsumer(RocketMqProperties rocketMqProperties) {
-        this.rocketMqProperties = rocketMqProperties.checkProperties();
+    public AbstractRocketConsumer(RocketMqConfig rocketMqConfig) {
+        this.rocketMqConfig = rocketMqConfig.checkProperties();
     }
 
     protected Message convertMessage(MessageExt messageExt) {
@@ -37,16 +37,16 @@ public abstract class AbstractRocketConsumer<T extends RocketTopic> implements R
     }
 
     protected <R> R trance(Supplier<R> call, String tranceId) {
-        MDC.put("tid", tranceId);
+        MDC.put("msgId", tranceId);
         try {
             return call.get();
         } finally {
-            MDC.remove("tid");
+            MDC.remove("msgId");
         }
     }
 
     protected String resolveTopicGroupName(String topicName) {
-        return this.rocketMqProperties.getEnv() + "-" + topicName;
+        return this.rocketMqConfig.getEnv() + "-" + topicName;
     }
 
     protected int thresholdOfErrorNotify(T topic, Message message) {
@@ -58,8 +58,8 @@ public abstract class AbstractRocketConsumer<T extends RocketTopic> implements R
      */
     protected Properties prepareProperties() {
         Properties properties = new Properties();
-        if (rocketMqProperties != null) {
-            properties = rocketMqProperties.generateProperties();
+        if (rocketMqConfig != null) {
+            properties = rocketMqConfig.generateProperties();
         }
         final Properties consumerProperties = this.consumerProperties();
         if (consumerProperties != null) {

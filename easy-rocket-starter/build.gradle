@@ -1,0 +1,25 @@
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+dependencies {
+	implementation project(":common")
+	implementation project(":rocketmq")
+
+	implementation 'com.google.guava:guava:33.2.1-jre'
+
+	compileOnly 'org.springframework:spring-tx'
+	compileOnly 'org.apache.rocketmq:rocketmq-client:5.1.3'
+	compileOnly 'org.springframework.boot:spring-boot-starter'
+
+	testImplementation(platform("org.junit:junit-bom:5.9.2"))
+	testImplementation('org.junit.jupiter:junit-jupiter:5.9.2')
+	testImplementation 'org.apache.rocketmq:rocketmq-client:5.1.3'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-json'
+	testImplementation 'org.springframework:spring-tx'
+	testImplementation 'org.springframework.boot:spring-boot-starter'
+}
+
+tasks.test {
+	useJUnitPlatform()
+}

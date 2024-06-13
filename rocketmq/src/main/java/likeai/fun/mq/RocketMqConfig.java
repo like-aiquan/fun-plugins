@@ -12,8 +12,8 @@ import org.apache.rocketmq.logging.org.slf4j.LoggerFactory;
  * @author chenaiquan
  * @date 2022/6/12 14:18
  */
-public class RocketMqProperties {
-    private static final Logger log = LoggerFactory.getLogger(RocketMqProperties.class);
+public class RocketMqConfig {
+    private static final Logger log = LoggerFactory.getLogger(RocketMqConfig.class);
     /**
      * 用来区分环境，区分 rocket mq 的 topic 和 group 的命名 规范的命名才是写好代码的第一步
      */
@@ -39,7 +39,7 @@ public class RocketMqProperties {
         return env;
     }
 
-    public RocketMqProperties setEnv(String env) {
+    public RocketMqConfig setEnv(String env) {
         this.env = env;
         return this;
     }
@@ -48,7 +48,7 @@ public class RocketMqProperties {
         return nameSrvAddr;
     }
 
-    public RocketMqProperties setNameSrvAddr(String nameSrvAddr) {
+    public RocketMqConfig setNameSrvAddr(String nameSrvAddr) {
         this.nameSrvAddr = nameSrvAddr;
         return this;
     }
@@ -57,7 +57,7 @@ public class RocketMqProperties {
         return nameSpace;
     }
 
-    public RocketMqProperties setNameSpace(String nameSpace) {
+    public RocketMqConfig setNameSpace(String nameSpace) {
         this.nameSpace = nameSpace;
         return this;
     }
@@ -66,12 +66,12 @@ public class RocketMqProperties {
         return producerGroup;
     }
 
-    public RocketMqProperties setProducerGroup(String producerGroup) {
+    public RocketMqConfig setProducerGroup(String producerGroup) {
         this.producerGroup = producerGroup;
         return this;
     }
 
-    public RocketMqProperties checkProperties() {
+    public RocketMqConfig checkProperties() {
         requireHasText(this.getEnv());
         if (hasText(this.getProducerGroup())) {
             this.setProducerGroup(this.getEnv());

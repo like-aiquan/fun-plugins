@@ -2,7 +2,7 @@ package likeai.fun.producer;
 
 
 import likeai.fun.fallback.FallBackService;
-import likeai.fun.mq.RocketMqProperties;
+import likeai.fun.mq.RocketMqConfig;
 import likeai.fun.topic.RocketTopic;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
@@ -18,12 +18,12 @@ import org.apache.rocketmq.remoting.exception.RemotingException;
 public class NormalRocketProducer extends AbstractRocketProducer {
     private final DefaultMQProducer producer;
 
-    public NormalRocketProducer(RocketMqProperties producerProperties, FallBackService fallBackService) {
-        this(producerProperties, fallBackService, new DefaultMQProducer());
+    public NormalRocketProducer(RocketMqConfig config, FallBackService fallBackService) {
+        this(config, fallBackService, new DefaultMQProducer());
     }
 
-    public NormalRocketProducer(RocketMqProperties producerProperties, FallBackService fallBackService, DefaultMQProducer producer) {
-        super(producerProperties, fallBackService);
+    public NormalRocketProducer(RocketMqConfig config, FallBackService fallBackService, DefaultMQProducer producer) {
+        super(config, fallBackService);
 
         this.producer = producer;
         this.start();
@@ -31,9 +31,9 @@ public class NormalRocketProducer extends AbstractRocketProducer {
 
     private void start() {
         try {
-            this.producer.setProducerGroup(this.producerProperties.getProducerGroup());
-            this.producer.setNamespace(this.producerProperties.getNameSpace());
-            String nameSrvAddr = this.producerProperties.getNameSrvAddr();
+            this.producer.setProducerGroup(this.config.getProducerGroup());
+            this.producer.setNamespace(this.config.getNameSpace());
+            String nameSrvAddr = this.config.getNameSrvAddr();
             this.producer.setNamesrvAddr(nameSrvAddr);
             this.producer.start();
             logger.info("start producer success {}", this.getClass().getSimpleName());

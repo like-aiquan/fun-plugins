@@ -8,7 +8,7 @@ import java.util.function.BiFunction;
 import likeai.fun.ContinuousStopwatch;
 import likeai.fun.fallback.FallBackService;
 import likeai.fun.json.JsonUtil;
-import likeai.fun.mq.RocketMqProperties;
+import likeai.fun.mq.RocketMqConfig;
 import likeai.fun.topic.RocketTopic;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
@@ -21,11 +21,11 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractRocketProducer {
     protected static final Logger logger = LoggerFactory.getLogger(AbstractRocketProducer.class);
-    protected RocketMqProperties producerProperties;
+    protected RocketMqConfig config;
     protected FallBackService fallBackService;
 
-    public AbstractRocketProducer(RocketMqProperties producerProperties, FallBackService fallBackService) {
-        this.producerProperties = producerProperties.checkProperties();
+    public AbstractRocketProducer(RocketMqConfig config, FallBackService fallBackService) {
+        this.config = config.checkProperties();
         this.fallBackService = fallBackService;
     }
 
@@ -70,6 +70,6 @@ public abstract class AbstractRocketProducer {
     }
 
     protected String resolveTopicName(String topicName) {
-        return this.producerProperties.getEnv() + "-" + topicName;
+        return this.config.getEnv() + "-" + topicName;
     }
 }

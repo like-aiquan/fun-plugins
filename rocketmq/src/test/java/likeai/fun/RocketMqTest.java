@@ -7,7 +7,7 @@ import likeai.fun.consumer.AbstractOrderRocketConsumer;
 import likeai.fun.fallback.impl.DefaultFallBackServiceImpl;
 import likeai.fun.mq.Action;
 import likeai.fun.mq.Message;
-import likeai.fun.mq.RocketMqProperties;
+import likeai.fun.mq.RocketMqConfig;
 import likeai.fun.mq.SubscribeRelation;
 import likeai.fun.producer.NormalRocketProducer;
 import likeai.fun.producer.OrderRocketProducer;
@@ -20,11 +20,11 @@ import org.junit.jupiter.api.Test;
  * @author likeai
  */
 public class RocketMqTest {
-    static RocketMqProperties properties;
+    static RocketMqConfig properties;
 
     @BeforeAll
     static void runWith() {
-        properties = new RocketMqProperties()
+        properties = new RocketMqConfig()
                 .setEnv("dev")
                 .setNameSrvAddr("10.251.61.42:9876");
     }
@@ -76,8 +76,8 @@ class OrderConsumerTest extends AbstractOrderRocketConsumer<TestOrderTopic> {
     private final static SubscribeRelation SUBSCRIBE_RELATION
             = SubscribeRelation.Builder.newBuilder().topic(TOPIC).group(GROUP).build();
 
-    public OrderConsumerTest(RocketMqProperties rocketMqProperties) {
-        super(rocketMqProperties, SUBSCRIBE_RELATION, TestOrderTopic.class);
+    public OrderConsumerTest(RocketMqConfig rocketMqConfig) {
+        super(rocketMqConfig, SUBSCRIBE_RELATION, TestOrderTopic.class);
     }
 
     @Override
@@ -99,7 +99,7 @@ class NormalConsumerTest extends AbstractNormalRocketConsumer<TestNormalTopic> {
     private final static SubscribeRelation SUBSCRIBE_RELATION
             = SubscribeRelation.Builder.newBuilder().topic(TOPIC).group(GROUP).build();
 
-    public NormalConsumerTest(RocketMqProperties rocketMq) {
+    public NormalConsumerTest(RocketMqConfig rocketMq) {
         super(rocketMq, SUBSCRIBE_RELATION, TestNormalTopic.class);
     }
 

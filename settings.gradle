@@ -3,4 +3,4 @@ include 'distributed-lock'
 include 'plugins-mybatis'
 include 'rocketmq'
 include 'common'
-
+include 'easy-rocket-starter'
