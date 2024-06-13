@@ -73,7 +73,7 @@ public class RocketMqConfig {
 
     public RocketMqConfig checkProperties() {
         requireHasText(this.getEnv());
-        if (hasText(this.getProducerGroup())) {
+        if (!hasText(this.getProducerGroup())) {
             this.setProducerGroup(this.getEnv());
             log.warn("empty producer group, will use like env");
         }
@@ -82,9 +82,9 @@ public class RocketMqConfig {
         // fixme 不用校验 name srv  如果是 consumer 模块启动时会直接开始拉取的动作，会直接报错
         // fixme producer 模块会推送失败 可以使用或实现 fallbackService 记录错误
         String nameSrvAddr = this.getNameSrvAddr();
-        if (hasText(nameSrvAddr)) {
+        if (!hasText(nameSrvAddr)) {
             nameSrvAddr = NameServerAddressUtils.getNameServerAddresses();
-            if (hasText(nameSrvAddr)) {
+            if (!hasText(nameSrvAddr)) {
                 throw new NullPointerException("check set name srv addr");
             }
             this.setNameSrvAddr(nameSrvAddr);

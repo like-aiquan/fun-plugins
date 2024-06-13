@@ -113,7 +113,7 @@ public class RedisDistributedLocker implements DistributedLock {
 
     void releaseLua(String lockId, String release) {
         this.lockId = lockId;
-        if (hasText(release)) {
+        if (!hasText(release)) {
             this.release = release;
         }
     }
