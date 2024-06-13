@@ -2,7 +2,6 @@ package likeai.fun.locker.redis;
 
 import static java.lang.System.currentTimeMillis;
 import static java.util.Objects.nonNull;
-import static likeai.fun.StringUtils.hasText;
 
 import io.lettuce.core.ScriptOutputType;
 import io.lettuce.core.SetArgs.Builder;
@@ -27,7 +26,7 @@ public class RedisDistributedLocker implements DistributedLock {
     private final AtomicBoolean locked = new AtomicBoolean(false);
     private String lock;
     private String lockId = UUID.randomUUID().toString().replace("-", "");
-    private String release =
+    private static final String release =
             """
                     if redis.call("get",KEYS[1]) == ARGV[1] then
                         return redis.call("del",KEYS[1])
@@ -92,7 +91,7 @@ public class RedisDistributedLocker implements DistributedLock {
             log.warn("already released {} lock!", lock);
             return true;
         }
-        Long r = this.connect.sync().eval(release, ScriptOutputType.INTEGER, new String[]{lock}, lockId);
+        Long r = this.connect.sync().eval(this.release, ScriptOutputType.INTEGER, new String[]{lock}, lockId);
         if (log.isDebugEnabled()) {
             log.debug("release lock [{},{},{}]", lock, lockId, r);
         }
@@ -111,11 +110,8 @@ public class RedisDistributedLocker implements DistributedLock {
         this.lock = lock;
     }
 
-    void releaseLua(String lockId, String release) {
+    void setLockId(String lockId) {
         this.lockId = lockId;
-        if (!hasText(release)) {
-            this.release = release;
-        }
     }
 
     void setRetry(Duration retry) {

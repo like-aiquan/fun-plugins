@@ -46,7 +46,7 @@ public class RedisLockerTest {
                 return;
             }
             try {
-                Thread.sleep(30000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 log.error(e.getMessage(), e);
             }

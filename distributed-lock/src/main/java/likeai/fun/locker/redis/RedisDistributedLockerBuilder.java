@@ -1,12 +1,10 @@
 package likeai.fun.locker.redis;
 
-import static java.util.Objects.requireNonNull;
 import static likeai.fun.StringUtils.hasText;
 import static likeai.fun.StringUtils.requireHasText;
 
 import io.lettuce.core.RedisClient;
 import java.time.Duration;
-import likeai.fun.locker.LockedKey;
 import likeai.fun.redis.RedisLinkTemplate;
 
 /**
@@ -61,15 +59,7 @@ public class RedisDistributedLockerBuilder {
     }
 
     public RedisDistributedLockerBuilder lockId(String lockId) {
-        return this.releaseLua(lockId, null);
-    }
-
-    // If replace default lockId
-    // I think you also need replace default release script
-    // Certainly, if your lockId compatible with default release script
-    // I will provide a method in build class to only change lock id
-    private RedisDistributedLockerBuilder releaseLua(String lockId, String release) {
-        this.redisDistributedLocker.releaseLua(lockId, release);
+        this.redisDistributedLocker.setLockId(lockId);
         return this;
     }
 
