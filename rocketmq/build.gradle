@@ -1,5 +1,5 @@
 dependencies {
-    api project(':common')
+    implementation project(':common')
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
 
     compileOnly 'org.apache.rocketmq:rocketmq-client:5.1.3'
