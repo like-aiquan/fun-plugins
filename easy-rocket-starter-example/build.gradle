@@ -4,8 +4,8 @@ apply plugin: 'io.spring.dependency-management'
 dependencies {
     // To demonstrate
     // it is essential to choose the required module and then publish it to your Maven repository.
-    implementation project(':common')
-    implementation project(':rocketmq')
+    // implementation project(':common')
+    // implementation project(':rocketmq')
     implementation project(':easy-rocket-starter')
 
     implementation 'com.google.guava:guava:33.2.1-jre'
